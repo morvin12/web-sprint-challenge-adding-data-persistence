@@ -1,17 +1,19 @@
 // build your server here and require it from index.js
 const express = require('express')
 const projectsRouter = require('./project/router')
-const resourceRouter = require('./resource/router')
+const resourcesRouter = require('./resource/router')
+const tasksRouter = require('./task/router')
 
 const server = express()
 server.use(express.json())
 
-server.get('/', (req, res) => {
-    res.send('<h1>It Worked!!</h1>')
-})
-
 server.use('/api/projects', projectsRouter)
-server.use('/api/resource', resourceRouter)
+server.use('/api/resources', resourcesRouter)
+server.use('/api/tasks', tasksRouter)
+
+server.use('*', (req, res) => {
+    res.status(404).json({ message: `${req.method} ${req.baseUrl} is not a valid address`})
+})
 
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).json({
