@@ -11,10 +11,6 @@ server.use('/api/projects', projectsRouter)
 server.use('/api/resources', resourcesRouter)
 server.use('/api/tasks', tasksRouter)
 
-server.use('*', (req, res) => {
-    res.status(404).json({ message: `${req.method} ${req.baseUrl} is not a valid address`})
-})
-
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).json({
       message: err.message,
